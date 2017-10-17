@@ -26,6 +26,7 @@ public class MinaAcceptHander implements IoHandler {
 	/**
 	 * 捕获异常时
 	 */
+	@Override
 	public void exceptionCaught(IoSession session, Throwable e)
 			throws Exception {
 		e.printStackTrace();
@@ -35,6 +36,7 @@ public class MinaAcceptHander implements IoHandler {
     /**
      * 接受到数据时
      */
+	@Override
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		DataFrame m = (DataFrame) message;
@@ -54,12 +56,14 @@ public class MinaAcceptHander implements IoHandler {
     /**
      * 消息调用IoSession.write写的(对象)
      */
+	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		logger.info("消息调用IoSession.write写的(对象)");
 	}
 	/**
 	 * 在关闭连接时调用，包括自己关闭和客户端关闭
 	 */
+	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		/*表明客户端已下线，某些地方需要验证，所以记录下来*/
 //		session.setAttribute("islive", false);	
@@ -72,12 +76,14 @@ public class MinaAcceptHander implements IoHandler {
     /**
      * session创建时
      */
+	@Override
 	public void sessionCreated(IoSession session) throws Exception {
 		logger.info("session创建");
 	}
 	/**
 	 * 当设置了idletime时，会定时调用该方法
 	 */
+	@Override
 	public void sessionIdle(IoSession session, IdleStatus arg1)
 			throws Exception {
 		Long lastrecesivetime = (Long) session.getAttribute("receivetime");
@@ -91,6 +97,7 @@ public class MinaAcceptHander implements IoHandler {
     /**
      * 
      */
+	@Override
 	public void sessionOpened(final IoSession session) throws Exception {
 		InetSocketAddress inetSocketAddress = (InetSocketAddress)session.getRemoteAddress();
 		String clientIP = inetSocketAddress.getAddress().getHostAddress();

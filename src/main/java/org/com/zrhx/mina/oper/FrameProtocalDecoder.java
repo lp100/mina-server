@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 
  * @author gs
- *编码器
+ *解码器
  */
 
 public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {

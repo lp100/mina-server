@@ -3,13 +3,13 @@ package org.com.zrhx.mina.oper;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-
-import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.com.zrhx.mina.eneity.DataFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -19,7 +19,7 @@ import org.com.zrhx.mina.eneity.DataFrame;
 
 public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {
 	
-	private Logger logger = Logger.getLogger(FrameProtocalDecoder.class);
+	private Logger logger = LoggerFactory.getLogger(FrameProtocalDecoder.class);
 	
 	private final String charset;
 
@@ -42,7 +42,7 @@ public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {
 				InetSocketAddress inetSocketAddress = (InetSocketAddress)session.getRemoteAddress();
 				String clientIP = inetSocketAddress.getAddress().getHostAddress();
 				int port = inetSocketAddress.getPort();
-				logger.error(clientIP+":"+port+"接收到客户端指令长度不够…………长度："+remaining);
+				logger.error("{}:{}接收到客户端指令长度不够…………长度：{}",clientIP,port,remaining);
 				return false;
 			}
 			in.mark();//标记当前位置，以便reset
@@ -56,8 +56,9 @@ public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {
 				int port = inetSocketAddress.getPort();
 				in.clear();
 				in.flip();
-				logger.error(clientIP+":"+port+"接收到客户端指令…………长度："+remaining+"……指令不正确......."+zrhx+"====:"+sizeBytes[0]+"====:"+sizeBytes[1]+"====:"+sizeBytes[2]+"====:"+sizeBytes[3]);
-				return false;//父类接收新数据，以拼凑成完整数据 
+				logger.error("{}:{}接收到客户端指令…………长度：{}……指令不正确.......{}====:{}====:{}====:{}====:{}",clientIP,port,remaining,zrhx,sizeBytes[0],sizeBytes[1],sizeBytes[2],sizeBytes[3]);
+				//父类接收新数据，以拼凑成完整数据
+				return false;
 			}
 			if (remaining < 8) {
 				in.reset();
@@ -72,8 +73,9 @@ public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {
 				String clientIP = inetSocketAddress.getAddress().getHostAddress();
 				int port = inetSocketAddress.getPort();
 				in.reset();
-				logger.error(clientIP+":"+port+"接收到客户端指令长度不够…………长度："+remaining);
-				return false;//父类接收新数据，以拼凑成完整数据 
+				logger.error("{}:{}接收到客户端指令长度不够…………长度：{}",clientIP,port,remaining);
+				//父类接收新数据，以拼凑成完整数据
+				return false;
 			}
 			
 			frame.setMessageLength(smsLength);

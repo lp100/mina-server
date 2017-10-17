@@ -25,7 +25,14 @@ public class FrameEncoderAdapter extends ProtocolEncoderAdapter {
 		this.charset = charset;
 	}
 
-	/* 编码器，对接收到的object进行编码工作，然后交由下一个过滤器处理 */
+	/**
+	 * 编码器，对接收到的object进行编码工作，然后交由下一个过滤器处理
+	 * @param session
+	 * @param message
+	 * @param out
+	 * @throws Exception
+	 */
+	@Override
 	public void encode(IoSession session, Object message,
 			ProtocolEncoderOutput out) throws Exception {
 		CharsetEncoder encoder = Charset.forName(charset).newEncoder();
@@ -35,7 +42,7 @@ public class FrameEncoderAdapter extends ProtocolEncoderAdapter {
 		try{
 			int clength= mes.getContentby().length;
 			IoBuffer io = null;
-			if(clength<64*1024-200){
+			if(clength<length){
 				io = IoBuffer.allocate(clength+12);
 			}else{
 				io = IoBuffer.allocate(64*1024);
@@ -45,15 +52,15 @@ public class FrameEncoderAdapter extends ProtocolEncoderAdapter {
 		    }
 			if(mes.getIndex()==0){
 				io.clear();
-				io.position(0);// 清空缓存并重置
+				// 清空缓存并重置
+				io.position(0);
 				io.putString("zrhx", encoder);
-				io.putInt(mes.getMessageType());//命令类型
+				//命令类型
+				io.putInt(mes.getMessageType());
 				io.putInt(mes.getMessageLength());
 				if(mes.getMessageLength()!=0){
 					byte[] contentby = mes.getContentby();
 					io.put(contentby,mes.getIndex() ,length);
-//					logger.error(endindex+":"+length+":"+clength);
-//					logger.error(mes.getIndex()+":"+new String(contentby,mes.getIndex() ,length));
 				}
 				logger.info("send remaining:" + io.limit());
 				io.flip();
@@ -64,10 +71,7 @@ public class FrameEncoderAdapter extends ProtocolEncoderAdapter {
 				if(mes.getMessageLength()!=0){
 					byte[] contentby = mes.getContentby();
 					io.put(contentby,mes.getIndex() ,length);
-//					logger.error("ss=================="+endindex+":"+length+":"+clength);
-//					logger.error(mes.getIndex()+":"+new String(contentby,mes.getIndex() ,length));
 				}
-				
 				io.flip();
 				out.write(io);
 			}

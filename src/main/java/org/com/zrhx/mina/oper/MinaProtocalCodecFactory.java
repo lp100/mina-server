@@ -12,11 +12,16 @@ import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
  * @author gs
  *此工厂只是用于小文件（几十mb吧，不然会抛内存溢出错误，对于大文件传输，必须边读边写）
  */
-public class MinaProtocalCodecFactory   implements ProtocolCodecFactory { 
-	
-        private final ProtocolEncoderAdapter encoder;  //编码
-        
-        private final CumulativeProtocolDecoder decoder;  //解码
+public class MinaProtocalCodecFactory   implements ProtocolCodecFactory {
+
+    /**
+     *  //编码
+     */
+    private final ProtocolEncoderAdapter encoder;
+    /**
+     * //解码
+     */
+    private final CumulativeProtocolDecoder decoder;
           
         public MinaProtocalCodecFactory() {  
             encoder=new FrameEncoderAdapter("utf-8");  
@@ -30,9 +35,11 @@ public class MinaProtocalCodecFactory   implements ProtocolCodecFactory {
 			this.decoder = decoder;
 		}
 
+		@Override
 		public ProtocolEncoder getEncoder(IoSession session) {  
             return encoder;  
-        }  
+        }
+        @Override
         public ProtocolDecoder getDecoder(IoSession session) {  
             return decoder;  
         }  

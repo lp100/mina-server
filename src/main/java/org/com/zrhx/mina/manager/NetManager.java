@@ -165,8 +165,8 @@ public class NetManager implements InitNet,UseNet{
 		try {
 			acceptor.bind(new InetSocketAddress(port));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 		receivedTask.start();
 	}

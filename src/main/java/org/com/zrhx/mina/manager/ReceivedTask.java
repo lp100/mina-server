@@ -51,12 +51,6 @@ public class ReceivedTask {
 	 */
 	public void start(){
 		fixedThreadPool.execute(new ReceivedThread(this));
-		/*for(int i=0;i<receivedThread.length;i++){
-			receivedThread[i] = new ReceivedThread(this); 
-			Thread thread = new Thread(receivedThread[i]);
-			thread.setName(i+"处理接收");
-			thread.start();
-		}*/
 	}
 
 	void putReceivedService(ReceivedService receivedServices) {
@@ -76,13 +70,6 @@ public class ReceivedTask {
 	 *
 	 */
 	boolean isStoped() {
-		/*int j = 0;
-		for(int i=0;i<receivedThread.length;i++){
-			if(receivedThread[i].isStoped()){
-				j++;
-			}
-		}
-		return j==receivedThread.length;*/
 		return runs<1;
 	}
 	
@@ -117,52 +104,10 @@ public class ReceivedTask {
         		log.error(Thread.currentThread().getName());
 			}
 		}
-//		switch (runs) {
-//		case 1:
-//             if(size>10){
-//            	start();
-//            	runs++;
-//             }
-//			break;
-//		case 2:
-//			if(size>20){
-//            	start();
-//            	runs++;
-//            }else if(size<10){
-//            	r.setStoped(true);
-//            	runs--;
-//            }
-//			break;
-//		case 3:
-//			if(size>30){
-//            	start();
-//            	runs++;
-//            }else if(size<20){
-//            	r.setStoped(true);
-//            	runs--;
-//            }
-//			break;
-//         case 4:
-//        	 if(size>40){
-//             	start();
-//             	runs++;
-//             }else if(size<30){
-//             	r.setStoped(true);
-//             	runs--;
-//             }
-//			break;
-//         case 5:
-//        	 if(size<40){
-//               	r.setStoped(true);
-//               	runs--;
-//              }
-// 			break;
-//		}
 		return frame;
 	}
 	
 	protected void execute(ReceivedThread r){
-//		DataFrame frame = frames.poll();
 		DataFrame frame = exectueRun(r);
 		if (null != frame) {
 			try {

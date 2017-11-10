@@ -81,6 +81,9 @@ public class ReceivedTask {
 	}
 	
 	private synchronized DataFrame exectueRun(ReceivedThread r){
+		if(null==services||services.isEmpty()){
+			return  null;
+		}
 		DataFrame frame = frames.poll();
 		int size = frames.size();
 		int cnThreads=size/10+1;

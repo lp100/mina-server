@@ -9,38 +9,40 @@ import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 
 /**
  * 解码/编码工厂
+ *
  * @author gs
- *此工厂只是用于小文件（几十mb吧，不然会抛内存溢出错误，对于大文件传输，必须边读边写）
+ *         此工厂只是用于小文件（几十mb吧，不然会抛内存溢出错误，对于大文件传输，必须边读边写）
  */
-public class MinaProtocalCodecFactory   implements ProtocolCodecFactory {
+public class MinaProtocalCodecFactory implements ProtocolCodecFactory {
 
     /**
-     *  //编码
+     * //编码
      */
     private final ProtocolEncoderAdapter encoder;
     /**
      * //解码
      */
     private final CumulativeProtocolDecoder decoder;
-          
-        public MinaProtocalCodecFactory() {  
-            encoder=new FrameEncoderAdapter("utf-8");  
-            decoder=new FrameProtocalDecoder("utf-8");  
-        }  
-          
-        public MinaProtocalCodecFactory(ProtocolEncoderAdapter encoder,
-				CumulativeProtocolDecoder decoder) {
-			super();
-			this.encoder = encoder;
-			this.decoder = decoder;
-		}
 
-		@Override
-		public ProtocolEncoder getEncoder(IoSession session) {  
-            return encoder;  
-        }
-        @Override
-        public ProtocolDecoder getDecoder(IoSession session) {  
-            return decoder;  
-        }  
+    public MinaProtocalCodecFactory() {
+        encoder = new FrameEncoderAdapter("utf-8");
+        decoder = new FrameProtocalDecoder("utf-8");
+    }
+
+    public MinaProtocalCodecFactory(ProtocolEncoderAdapter encoder,
+                                    CumulativeProtocolDecoder decoder) {
+        super();
+        this.encoder = encoder;
+        this.decoder = decoder;
+    }
+
+    @Override
+    public ProtocolEncoder getEncoder(IoSession session) {
+        return encoder;
+    }
+
+    @Override
+    public ProtocolDecoder getDecoder(IoSession session) {
+        return decoder;
+    }
 } 

@@ -48,7 +48,7 @@ public class MinaAcceptHander implements IoHandler {
 		if (m.getMessageType() ==0x1007) {
 			logger.info(clientIP+":"+port+"接收到客户端心跳包………………");
 		} else {
-			logger.info(clientIP+":"+port+"接收到客户端数据包………………");
+			logger.info(clientIP+":"+port+"接收到客户端数据包………………"+m.getContent());
 			config.getReceivedHandler().onReceived(m);
 		}
 		session.setAttribute("receivetime", System.currentTimeMillis());

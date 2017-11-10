@@ -60,13 +60,13 @@ public class Client {
 		while(frame.getIndex()<length){//如果协议太大将分包操作
 			WriteFuture write = ioSession.write(frame);
 //			System.out.println(write.isWritten()+"ss=====wswww============="+frame.getIndex()+":"+length);
-			if(write.isWritten()){
+//			if(write.isWritten()){
 //				return true;
-			}else{
+//			}else{
 //				System.out.println(write.getException());
 //				System.out.println(ioSession);
 //				return false;
-			}
+//			}
 			
 		}
 		return true;

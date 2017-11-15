@@ -4,7 +4,7 @@
   <groupId>com.zrhx.mina</groupId>
   <artifactId>mina-server</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1</version>
+  <version>0.0.3</version>
   <name>mina-server</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -23,11 +23,33 @@
 			<artifactId>mina-core</artifactId>
 			<version>${version.mina}</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.apache.mina</groupId>
 			<artifactId>mina-integration-jmx</artifactId>
 			<version>${version.mina}</version>
-		</dependency>
+			<exclusions>
+				<exclusion>
+					<artifactId>mina-integration-beans</artifactId>
+					<groupId>org.apache.mina</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ognl</artifactId>
+					<groupId>ognl</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mina-core</artifactId>
+					<groupId>org.apache.mina</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>javassist</artifactId>
+					<groupId>javassist</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mina-integration-ognl</artifactId>
+					<groupId>org.apache.mina</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>-->
   </dependencies>
   <build>
     <finalName>mina-server</finalName>
@@ -53,12 +75,6 @@
 						<Import-Package>*</Import-Package>
 					</instructions>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<version>2.4</version>
-				<configuration></configuration>
 			</plugin>
 		</plugins>
   </build>

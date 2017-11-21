@@ -38,7 +38,7 @@ public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {
 		int remaining = in.remaining();
 		try {
 			logger.info("协议开始解析：");
-			if (remaining < 4) {
+			if (remaining < 8) {
 				InetSocketAddress inetSocketAddress = (InetSocketAddress)session.getRemoteAddress();
 				String clientIP = inetSocketAddress.getAddress().getHostAddress();
 				int port = inetSocketAddress.getPort();
@@ -58,10 +58,6 @@ public class  FrameProtocalDecoder extends CumulativeProtocolDecoder {
 				in.flip();
 				logger.error("{}:{}接收到客户端指令…………长度：{}……指令不正确.......{}====:{}====:{}====:{}====:{}",clientIP,port,remaining,zrhx,sizeBytes[0],sizeBytes[1],sizeBytes[2],sizeBytes[3]);
 				//父类接收新数据，以拼凑成完整数据
-				return false;
-			}
-			if (remaining < 8) {
-				in.reset();
 				return false;
 			}
 			//获取协议类型

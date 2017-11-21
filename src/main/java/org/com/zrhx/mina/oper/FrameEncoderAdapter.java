@@ -50,10 +50,10 @@ public class FrameEncoderAdapter extends ProtocolEncoderAdapter {
 			if(clength<endindex){
 				length =length- (endindex-clength) ;
 		    }
+			io.clear();
+			// 清空缓存并重置
+			io.position(0);
 			if(mes.getIndex()==0){
-				io.clear();
-				// 清空缓存并重置
-				io.position(0);
 				io.putString("zrhx", encoder);
 				//命令类型
 				io.putInt(mes.getMessageType());
@@ -66,8 +66,6 @@ public class FrameEncoderAdapter extends ProtocolEncoderAdapter {
 				io.flip();
 				out.write(io);
 			}else{
-				io.clear();
-				io.position(0);// 清空缓存并重置
 				if(mes.getMessageLength()!=0){
 					byte[] contentby = mes.getContentby();
 					io.put(contentby,mes.getIndex() ,length);
